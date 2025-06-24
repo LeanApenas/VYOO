@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador de QR Codes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 80%;
+      max-width: 500px;
+      height: 150px;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #copyInvalidBtn {
+      background-color: #dc3545;
+    }
+    #copyInvalidBtn:hover {
+      background-color: #c82333;
+    }
+    #errorMsg {
+      margin-top: 20px;
+      font-size: 18px;
+      color: red;
+    }
+    #results {
+      margin-top: 20px;
+      text-align: left;
+      width: 80%;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .result-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .valid-photos {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .valid-no-photos {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .invalid {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <h1>Validador de QR Codes</h1>
+  <textarea id="qrInput" placeholder="Digite os códigos QR, um por linha
+Exemplo:
+TDRJ-E0DNG24
+TDRJ-LHEUB24"></textarea>
+  <br>
+  <button id="verifyBtn">Verificar</button>
+  <button id="copyInvalidBtn" style="display: none;">Copiar Códigos Inválidos</button>
+  <div id="errorMsg"></div>
+  <div id="results"></div>
+  <script src="script.js"></script>
+</body>
+</html>
