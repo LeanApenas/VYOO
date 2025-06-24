@@ -15,7 +15,6 @@ verifyBtn.addEventListener('click', async () => {
     return;
   }
 
-  // Validação do formato: começa com TDRJ e termina com 24 ou 25
   const qrCodeRegex = /^TDRJ-[A-Z0-9]{5}(24|25)$/;
   const validCodes = [];
   const invalidCodes = [];
@@ -39,7 +38,6 @@ verifyBtn.addEventListener('click', async () => {
     return;
   }
 
-  // Processar cada código válido
   for (const code of validCodes) {
     const resultDiv = document.createElement('div');
     resultDiv.classList.add('result-item');
@@ -47,7 +45,7 @@ verifyBtn.addEventListener('click', async () => {
     resultsDiv.appendChild(resultDiv);
 
     try {
-      const response = await fetch('http://localhost:3000/verificar', {
+      const response = await fetch('/verificar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ codigo: code })
@@ -61,7 +59,7 @@ verifyBtn.addEventListener('click', async () => {
           resultDiv.textContent = `✅ ${code}: Código válido com fotos! URL: ${data.url}`;
         } else {
           resultDiv.classList.add('valid-no-photos');
-          resultDiv.textContent = `✅ ${code}: Código válido, mas nenhuma foto encontrada. Detalhes: ${JSON.stringify(data.debug)}`;
+          resultDiv.textContent = `✅ ${code}: Código válido, mas nenhuma foto encontrada.`;
         }
       } else {
         resultDiv.classList.add('invalid');
@@ -70,15 +68,13 @@ verifyBtn.addEventListener('click', async () => {
         copyInvalidBtn.style.display = 'inline-block';
       }
     } catch (err) {
-      console.error(`Erro ao verificar ${code}:`, err);
       resultDiv.classList.add('invalid');
-      resultDiv.textContent = `❌ ${code}: Erro ao verificar o código. Tente novamente.`;
+      resultDiv.textContent = `❌ ${code}: Erro ao verificar o código.`;
       invalidCodes.push(code);
       copyInvalidBtn.style.display = 'inline-block';
     }
   }
 
-  // Configurar o botão de copiar códigos inválidos
   copyInvalidBtn.onclick = () => {
     if (invalidCodes.length === 0) {
       errorMsg.textContent = 'Nenhum código inválido para copiar.';
@@ -87,14 +83,13 @@ verifyBtn.addEventListener('click', async () => {
     const invalidText = invalidCodes.sort().join('\n');
     navigator.clipboard.writeText(invalidText).then(() => {
       errorMsg.style.color = 'green';
-      errorMsg.textContent = 'Códigos inválidos copiados para a área de transferência!';
+      errorMsg.textContent = 'Códigos inválidos copiados!';
       setTimeout(() => {
         errorMsg.textContent = '';
         errorMsg.style.color = 'red';
       }, 3000);
     }).catch(err => {
       errorMsg.textContent = 'Erro ao copiar códigos inválidos.';
-      console.error('Erro ao copiar:', err);
     });
   };
 });
